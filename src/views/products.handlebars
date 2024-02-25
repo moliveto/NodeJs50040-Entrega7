@@ -1,29 +1,50 @@
-<!-- products.handlebars -->
-<h1>Lista de Productos</h1>
-<div id="products-container">
-    <!-- Aquí se cargarán los productos -->
-</div>
+<container class="marco">
+    <table id="productsTable" class="table" action="/api/products" method="get">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Título</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Precio
+                    <a href="/products?page={{page}}&sort={{sort}}"><button type="button"
+                            class="btn btn-outline-primary btn-sm"> ordenar precio </button></a>
+                </th>
+                <th scope="col">Thumbnail</th>
+                <th scope="col">Código</th>
+                <th scope="col">Stock</th>
+                <th scope="col"></th>
 
-<div class="pagination">
-    <a id="prev-link" href="#">Anterior</a>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each docs}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.title}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.thumbnail}}</td>
+                <td>{{this.code}}</td>
+                <td>{{this.stock}}</td>
+                <td>
+                    <form action="api/cart/{{this.cart}}/product/{{this.id}}" method="post"><button
+                            class="btn btn-outline-primary" role="button" name="foo" id="adCart"
+                            value="Agregar al Carrito"> Agregar al carrito </button></form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
 
-    <span id="page-info"></span>
+    <div class="botonera d-flex justify-content-between align-items-center">
+        {{#if hasPrevPage}}
+        <a href="/products?page={{prevPage}}" class="btn btn-primary me-3">Pagina previa</a>
+        {{/if}}
 
-    <a id="next-link" href="#">Siguiente</a>
-</div>
+        <h5 class="numeracion m-0">Pagina {{page}} de {{totalPages}}</h5>
 
-<script id="product-template" type="text/x-handlebars-template">
-    {{#each products}}
-        <div class="product">
-            <h2>{{this.title}}</h2>
-            <p>{{this.description}}</p>
-            <p>Precio: ${{this.price}}</p>
-            <p>Categoría: {{this.category}}</p>
-            <img src="#" alt="{{this.thumbnail}}">
-            <button onclick="addToCart('{{this.id}}')">Agregar al carrito</button>
-        </div>
-    {{/each}}
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-<script src="js/products.js"></script>
+        {{#if hasNextPage}}
+        <a href="/products?page={{nextPage}}" class="btn btn-primary">Pagina siguiente</a>
+        {{/if}}
+    </div>
+</container>
