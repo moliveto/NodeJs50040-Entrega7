@@ -1,0 +1,29 @@
+<!-- products.handlebars -->
+<h1>Lista de Productos</h1>
+<div id="products-container">
+    <!-- Aquí se cargarán los productos -->
+</div>
+
+<div class="pagination">
+    <a id="prev-link" href="#">Anterior</a>
+
+    <span id="page-info"></span>
+
+    <a id="next-link" href="#">Siguiente</a>
+</div>
+
+<script id="product-template" type="text/x-handlebars-template">
+    {{#each products}}
+        <div class="product">
+            <h2>{{this.title}}</h2>
+            <p>{{this.description}}</p>
+            <p>Precio: ${{this.price}}</p>
+            <p>Categoría: {{this.category}}</p>
+            <img src="#" alt="{{this.thumbnail}}">
+            <button onclick="addToCart('{{this.id}}')">Agregar al carrito</button>
+        </div>
+    {{/each}}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+<script src="js/products.js"></script>

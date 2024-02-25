@@ -1,11 +1,12 @@
 import express from 'express';
-import { getAllCarts, getCartById, createCart, updateCartById, deleteCartById } from '../models/carts.model.js';
+import CartManager from "../dao/CartManager.js";
 
 const router = express.Router();
+const cartManager = new CartManager();
 
 router.get('/', async (req, res) => {
     try {
-        const carts = await getAllCarts();
+        const carts = await cartManager.getAllCarts();
         res.send(carts);
     } catch (error) {
         console.error(error);
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
 router.get('/:pid', async (req, res) => {
     try {
         const pid = req.params.pid;
-        const cart = await getCartById(pid);
+        const cart = await cartManager.getCartById(pid);
         if (cart) {
             res.send(cart);
         } else {
@@ -31,7 +32,7 @@ router.get('/:pid', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const newCart = req.body;
-        const cart = await createCart(newCart);
+        const cart = await cartManager.createCart(newCart);
         res.json({
             ok: true,
             message: 'Cart added',
@@ -47,7 +48,7 @@ router.put('/:id', async (req, res) => {
     try {
         const cartId = req.params.id;
         const modCart = req.body;
-        const cart = await updateCartById(cartId, modCart);
+        const cart = await cartManager.updateCartById(cartId, modCart);
         res.json({
             ok: true,
             message: 'Cart updated',
@@ -62,7 +63,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const cartId = req.params.id;
-        await deleteCartById(cartId);
+        await cartManager.deleteCartById(cartId);
         res.json({
             ok: true,
             message: 'Cart deleted',

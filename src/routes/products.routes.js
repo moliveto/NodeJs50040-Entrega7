@@ -1,11 +1,11 @@
 import { Router } from "express";
+import ProductsManager from "../dao/ProductsManager.js";
+
 const router = Router();
-import productsData from '../data/product-data.js';
-import { getProductById, getAllProducts, createProduct, updateProduct, deleteProduct, InsertMany, getAllProductsFilteredAndPaged } from '../models/products.model.js';
+const productsManager = new ProductsManager();
 
 router.get("/insertion", async (req, res) => {
-    //const productsData = require("../data/product-data.js");
-    const results = await InsertMany(productsData);
+    const results = await productsManager.InsertMany();
     return res.json({
         message: `data inserted succesfully`,
         results,
@@ -15,7 +15,7 @@ router.get("/insertion", async (req, res) => {
 router.get("/:pid", async (req, res) => {
     const pid = req.params.pid;
     try {
-        const product = await getProductById(pid);
+        const product = await productsManager.getProductById(pid);
         res.send(product);
     } catch (error) {
         res.status(500).send({ error: "Error al obtener el producto por ID" });
@@ -57,7 +57,7 @@ router.get("/", async (req, res) => {
 
 
         // Realizar la consulta utilizando mongoose-paginate-v2
-        const result = await getAllProductsFilteredAndPaged(filter, options);
+        const result = await productsManager.getAllProductsFilteredAndPaged(filter, options);
 
         res.json({
             status: 'success',
@@ -79,7 +79,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const newProduct = await createProduct(req.body);
+        const newProduct = await productsManager.createProduct(req.body);
         res.send(newProduct);
     } catch (error) {
         res.status(500).send({ error: "Error al agregar el producto" });
@@ -89,7 +89,7 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const updatedProduct = await updateProduct(id, req.body);
+        const updatedProduct = await productsManager.updateProduct(id, req.body);
         res.send(updatedProduct);
     } catch (error) {
         res.status(500).send({ error: "Error al actualizar el producto" });
@@ -99,7 +99,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const deletedProduct = await deleteProduct(id);
+        const deletedProduct = await productsManager.deleteProduct(id);
         res.send(deletedProduct);
     } catch (error) {
         res.status(500).send({ error: "Error al eliminar el producto" });

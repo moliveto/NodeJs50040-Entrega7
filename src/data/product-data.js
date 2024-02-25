@@ -1,11 +1,14 @@
 import fs from 'fs';
 import __dirname from "../utils.js";
 
-const productsData = [];
 
-const jsonData = fs.readFileSync(__dirname + '/data/products.json', 'utf-8');
-const products = JSON.parse(jsonData);
+export async function getAllProductsFromJson() {
+    const productsData = [];
 
-productsData.push(...products);
+    const jsonData = fs.readFileSync(__dirname + '/data/products.json', 'utf-8');
+    const products = JSON.parse(jsonData);
 
-export default productsData;
+    productsData.push(...products);
+
+    return productsData;
+}

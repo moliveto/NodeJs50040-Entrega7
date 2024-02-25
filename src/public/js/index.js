@@ -1,4 +1,4 @@
-// const socket = io.connect('http://localhost:3000')
+const socket = io.connect('http://localhost:3000')
 const form = document.getElementById('addForm')
 const botonProds = document.getElementById('botonProductos')
 const removeform = document.getElementById('removeForm')
@@ -35,6 +35,7 @@ socket.on('products-data', (products) => {
                     <td>${product.code}</td>
                     <td>${product.stock}</td>
                     <td>${product.status}</td>
+                    <td>${product.category}</td>
                 </tr>
             `;
         });
