@@ -1,0 +1,90 @@
+<div class="row justify-content-center">
+
+    <div class="col-6 col-lg-6">
+        <h4>Agregar producto</h4>
+        <form id="addForm" class="mb-4">
+            <div class="row g-3">
+                <div class="col-12">
+                    {{!-- <label for="title" class="form-label">Título</label> --}}
+                    <input type="text" name="title" id="title" class="form-control" placeholder="Nombre del producto">
+                </div>
+                <div class="col-12">
+                    {{!-- <label for="description" class="form-label">Descripcion</label> --}}
+                    <input type="text" name="description" id="description" class="form-control"
+                        placeholder="Descripcion del producto">
+                </div>
+                <div class="col-6">
+                    {{!-- <label for="price" class="form-label">Precio</label> --}}
+                    <input type="number" name="price" id="price" class="form-control" placeholder="Precio" step="0.01"
+                        min="0">
+                </div>
+                <div class="col-6">
+                    {{!-- <label for="stock" class="form-label">Stock</label> --}}
+                    <input type="number" required name="stock" id="stock" class="form-control" placeholder="Stock">
+                </div>
+                <div class="col-6">
+                    {{!-- <label for="category" class="form-label">Category</label> --}}
+                    <input type="text" required name="category" id="category" class="form-control"
+                        placeholder="Categoria del producto">
+                </div>
+                <div class="col-6">
+                    {{!-- <label for="code" class="form-label">Code</label> --}}
+                    <input type="text" required name="code" id="code" class="form-control" placeholder="Code">
+                </div>
+                <div class="col-12">
+                    {{!-- <label for="thumbnail" class="form-label">Thumbnail</label> --}}
+                    <input type="text" name="thumbnail" id="thumbnail" class="form-control" placeholder="Thumbnail">
+                </div>
+                <div class="col-12">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Agregar producto</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-6 col-lg-6">
+        <h4>Eliminar un Producto</h4>
+        <form id="removeForm" class="mb-4">
+            <div class="row g-3">
+                <div class="col-12">
+                    {{!-- <label for="id" class="form-label">Id</label> --}}
+                    <input type="text" required name="id" id="id" class="form-control" placeholder="id">
+                </div>
+                <div class="col-12">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Eliminar producto</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-12 col-lg-12">
+        <table id="productsTable" class="table table-striped" action="/api/products" method="get">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Thumbnail</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.title}}</td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.thumbnail}}</td>
+                    <td>{{this.code}}</td>
+                    <td>{{this.stock}}</td>
+                    <td>{{this.status}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

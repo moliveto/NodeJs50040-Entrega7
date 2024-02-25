@@ -1,0 +1,43 @@
+<section class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form id="addForm" class="d-none">
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form id="removeForm" class="d-none">
+            </form>
+        </div>
+    </div>
+
+    <table id="productsTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Título</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Thumbnail</th>
+                <th scope="col">Código</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+            {{#each this as |yValue yKey|}}
+            <tr>
+                <td>{{yValue}}</td>
+                <td>{{this.title}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.thumbnail}}</td>
+                <td>{{this.code}}</td>
+                <td>{{this.stock}}</td>
+                <td>{{this.status}}</td>
+            </tr>
+            {{/each}}
+            {{/each}}
+        </tbody>
+    </table>
+</section>
