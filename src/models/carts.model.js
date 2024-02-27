@@ -30,5 +30,3 @@ cartSchema.pre('findOne', function () {
 const CartModel = model('Cart', cartSchema);
 
 export default CartModel;
-
-

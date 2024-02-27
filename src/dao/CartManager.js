@@ -57,6 +57,21 @@ class CartManager {
             throw new Error(`${errMessage}: ${error.message}`);
         }
     }
+
+    async deleteByCidAndPid(cid, pid) {
+        try {
+            const deletedCart = await CartModel.findOneAndUpdate(
+                { _id: cid }, // Filter by cart ID
+                { $pull: { products: { product: pid } } }, // Remove product with pid from products array
+                { new: true } // Return the updated cart document
+            );
+            return deletedCart;
+        } catch (error) {
+            const errMessage = `Error al eliminar el carrito por cid ${cid}  y pid ${pid} `;
+            throw new Error(`${errMessage}: ${error.message}`);
+        }
+    }
+
 }
 
 export default CartManager;
