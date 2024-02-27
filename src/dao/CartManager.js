@@ -72,6 +72,15 @@ class CartManager {
         }
     }
 
+    async getCarrito(cid) {
+        try {
+            const cart = await CartModel.find({ _id: cid }).populate("products.product", { title: 1, price: 1, stock: 1, code: 1 });
+            return cart
+        } catch (error) {
+            return { status: "failed", message: "NO EXISTE EL ID DE INGRESADO" }
+        }
+    }
+
 }
 
 export default CartManager;

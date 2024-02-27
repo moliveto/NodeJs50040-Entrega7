@@ -82,4 +82,29 @@ viewsRoute.get("/products", async (req, res) => {
     }
 });
 
+viewsRoute.get("/cart/:cid", async (req, res) => {
+    try {
+        const cid = req.params.cid
+        const cart = await CartModel.findOne({ _id: cid }).populate("products.product", { title: 1, price: 1, stock: 1, code: 1, description: 1 });
+
+        const cartModel = cart.products.map(item => {
+            return {
+                id: item.product._id,
+                quantity: item.quantity,
+                price: item.product.price,
+                title: item.product.title,
+                description: item.product.description,
+            }
+        })
+
+        res.render("cart", {
+            cart: cid,
+            item: cartModel,
+        })
+
+    } catch (error) {
+        return res.json({ status: "failed", error: error.message })
+    }
+})
+
 export default viewsRoute;

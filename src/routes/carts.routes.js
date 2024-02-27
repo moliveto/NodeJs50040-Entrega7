@@ -169,4 +169,9 @@ router.delete('/:cid', async (req, res) => {
     }
 });
 
+router.get("/:cid", async (req, res) => {
+    const cid = req.params.cid
+    res.send(await cartManager.getCarrito(cid))
+})
+
 export default router;
