@@ -1,4 +1,5 @@
 import CartModel from '../models/carts.model.js';
+import ProductsModel from '../models/products.model.js';
 
 class CartManager {
 
@@ -78,6 +79,40 @@ class CartManager {
             return cart
         } catch (error) {
             return { status: "failed", message: "NO EXISTE EL ID DE INGRESADO" }
+        }
+    }
+
+    async addProduct(cid, pid, quantity) {
+
+        try {
+
+            console.log(`${cid} ${pid} ${quantity}`);
+
+            const cart = await CartModel.findById(cid);
+            //console.log(cart);
+            const product = await ProductsModel.findById(pid);
+            //console.log(product);
+
+            if (!cart) {
+                throw new Error(`No existe el cart ${cid}`);
+            }
+            if (!product) {
+                throw new Error(`No existe el producto ${pid}`);
+            }
+
+            const index = cart.products.findIndex(prod => prod.product.toString() === pid);
+            console.log(index);
+            if (index !== -1) {
+                cart.products[index].quantity = quantity + cart.products[index].quantity
+            } else {
+                cart.products.push({ product: pid, quantity: quantity });
+            }
+
+            await cartModel.findOneAndUpdate({ _id: cid }, cart)
+            return { status: "success", message: "Producto Agregado", producto: cart }
+
+        } catch (error) {
+            return { status: "failed", message: error.message }
         }
     }
 

@@ -1,10 +1,12 @@
 import { Router } from "express";
 import ProductsManager from "../dao/ProductsManager.js";
+import CartManager from "../dao/CartManager.js";
 import ProductsModel from "../models/products.model.js"
 import CartModel from '../models/carts.model.js';
 
 const viewsRoute = Router();
 const productsManager = new ProductsManager();
+const cartManager = new CartManager();
 
 viewsRoute.get("/", (req, res) => {
     res.render("index", {})
@@ -81,6 +83,34 @@ viewsRoute.get("/products", async (req, res) => {
         return res.json({ status: "failed", error: error.message })
     }
 });
+
+viewsRoute.post("/products/api/cart/:cid/product/:pid", async (req, res) => {
+    try {
+        const pid = req.params.pid;
+        const cid = req.params.cid;
+        await cartManager.addProduct(cid, pid, 1);
+        const cart = await CartModel.find({ _id: cid }).populate("products.product", { title: 1, price: 1, stock: 1, code: 1, description: 1 });
+
+        const cartUp = cart[0].products.map(item => {
+            return {
+                id: item.product._id,
+                quantity: item.quantity,
+                price: item.product.price,
+                title: item.product.title,
+                description: item.product.description,
+            }
+        })
+
+        res.render("cart", {
+            cart: cid,
+            item: cartUp,
+        })
+
+    } catch (error) {
+        return res.json({ status: "failed", error: error.message })
+    }
+})
+
 
 viewsRoute.get("/cart/:cid", async (req, res) => {
     try {

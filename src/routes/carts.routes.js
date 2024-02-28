@@ -3,9 +3,10 @@ const router = express.Router();
 import { body } from 'express-validator';
 import CartManager from "../dao/CartManager.js";
 import CartModel from '../models/carts.model.js';
-const cartManager = new CartManager();
 import mongoose from 'mongoose';
 const { Types } = mongoose;
+
+const cartManager = new CartManager();
 
 router.get('/', async (req, res) => {
     try {
