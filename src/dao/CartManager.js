@@ -1,6 +1,7 @@
 import CartModel from '../models/carts.model.js';
 import ProductsModel from '../models/products.model.js';
-
+import mongoose from 'mongoose';
+const { Schema, model } = mongoose;
 class CartManager {
 
     // CREATE - Crear un nuevo carrito
@@ -89,9 +90,9 @@ class CartManager {
             console.log(`${cid} ${pid} ${quantity}`);
 
             const cart = await CartModel.findById(cid);
-            //console.log(cart);
+            console.log(cart);
             const product = await ProductsModel.findById(pid);
-            //console.log(product);
+            console.log(product);
 
             if (!cart) {
                 throw new Error(`No existe el cart ${cid}`);
@@ -100,19 +101,19 @@ class CartManager {
                 throw new Error(`No existe el producto ${pid}`);
             }
 
-            const index = cart.products.findIndex(prod => prod.product.toString() === pid);
-            console.log(index);
+            const index = cart.products.findIndex(prod => prod.product === pid);
+            console.log(`resultado index ${index}`);
             if (index !== -1) {
                 cart.products[index].quantity = quantity + cart.products[index].quantity
             } else {
                 cart.products.push({ product: pid, quantity: quantity });
             }
 
-            await cartModel.findOneAndUpdate({ _id: cid }, cart)
+            await CartModel.findOneAndUpdate({ _id: cid }, cart)
             return { status: "success", message: "Producto Agregado", producto: cart }
 
         } catch (error) {
-            return { status: "failed", message: error.message }
+            return { status: "addProduct failed", message: error.message }
         }
     }
 

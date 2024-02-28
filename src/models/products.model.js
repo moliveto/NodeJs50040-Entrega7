@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import mongoosePaginateV2 from 'mongoose-paginate-v2';
-const { Types } = mongoose;
+//const { Types, Schema, model } = mongoose;
 
 // Definir el esquema para el producto
 const productSchema = new mongoose.Schema({

@@ -1,20 +1,19 @@
 import mongoose from 'mongoose';
-
-const { Schema, model } = mongoose;
+//const { Schema, model } = mongoose;
 
 // Definir el esquema para el carrito de compras
-const cartSchema = new Schema({
+const cartSchema = new mongoose.Schema({
     products: {
         type: [
             {
                 product: {
                     type: mongoose.Schema.Types.ObjectId,
-                    ref: "products",
-                    required: true
+                    ref: "Products"
+                    //required: true
                 },
                 quantity: {
-                    type: Number,
-                    required: true
+                    type: Number
+                    //required: true
                 }
             },
         ],
@@ -27,6 +26,6 @@ cartSchema.pre('findOne', function () {
 });
 
 // Crear el modelo Cart basado en el esquema
-const CartModel = model('Cart', cartSchema);
+const CartModel = mongoose.model('Cart', cartSchema);
 
 export default CartModel;

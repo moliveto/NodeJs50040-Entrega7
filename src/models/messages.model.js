@@ -8,7 +8,7 @@ const messagesSchema = new Schema({
     timestamp: { type: Date, default: Date.now },
 });
 
-const collectionName = "messages";
+const collectionName = "Messages";
 const messagesModel = model(collectionName, messagesSchema);
 
 export default messagesModel;
