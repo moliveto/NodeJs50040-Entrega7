@@ -13,9 +13,14 @@
             <li class="list-group-item">
                 <h5>Cantidad: {{this.quantity}}</h5>
             </li>
-            <li class="list-group-item">Price: $-{{this.price}}</li>
+            <li class="list-group-item">Price: ${{this.price}}</li>
             <li class="list-group-item">Description: {{this.description}}</li>
         </ul>
         {{/each}}
+
+        <div class="row">
+            <form action="/cart/{{this.cart}}" method="get"><button class="btn btn-outline-primary" role="button"
+                    name="foo" id="viewCart" value="Ver al Carrito"> Ver al carrito </button></form>
+        </div>
     </div>
 </body>
